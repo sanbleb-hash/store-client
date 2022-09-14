@@ -1,8 +1,11 @@
 import React from 'react';
 
-const Button = ({ size, children, stylez }) => {
+const Button = ({ dynamicStyles, children, directions }) => {
 	return (
-		<button className={`${size} inline-block rounded-md`} onClick={stylez}>
+		<button
+			className={`${dynamicStyles} inline-block rounded-md`}
+			onClick={directions}
+		>
 			{children}
 		</button>
 	);

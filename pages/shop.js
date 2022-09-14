@@ -8,11 +8,11 @@ const Shop = () => {
 		setProducts(storeData);
 	}, []);
 	return (
-		<section className=' min-h-screen w-full'>
+		<section className=' min-h-screen w-full '>
 			<h1 className=' text-center py-4'>
 				welcome to the best online shopping experience
 			</h1>
-			<div className='flex w-full items-center flex-wrap gap-4 justify-center sm:justify-start '>
+			<div className='flex container mx-auto py-7 items-center flex-wrap gap-4 justify-center sm:justify-start '>
 				{products?.map((product) => (
 					<Products key={product.id} product={product} />
 				))}
