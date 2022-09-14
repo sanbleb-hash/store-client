@@ -4,12 +4,6 @@ import Categories from './categories';
 import Shop from './shop';
 
 export default function Home() {
-	const utilities = {
-		h1: 'text-8xl',
-		h2: 'text-5xl',
-		h3: 'text-4xl',
-		h5: 'text-3xl',
-	};
 	return (
 		<div className='w-screen min-h-screen p-3 bg-slate-100'>
 			<Head>
@@ -18,7 +12,7 @@ export default function Home() {
 				<link rel='icon' href='/favicon.ico' />
 			</Head>
 
-			<main className=' prose-xl text-gray-700    font-openSans prose-headings:font-semibold scroll-smooth container mx-auto '>
+			<main className=' prose-xl text-gray-700    font-openSans prose-headings:font-semibold scroll-smooth container mx-auto heading:tracking-wider leading-6 '>
 				<Categories />
 				<Shop />
 			</main>
