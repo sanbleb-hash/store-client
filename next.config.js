@@ -1,3 +1,4 @@
 module.exports = {
-  reactStrictMode: true,
-}
+	reactStrictMode: true,
+	domains: ['https://cdn.pixabay.com', 'https://media.istockphoto.com'],
+};
