@@ -6,6 +6,7 @@ module.exports = {
 			'https://cdn.pixabay.com',
 			'https://media.istockphoto.com',
 			'i.ibb.co',
+			'cdn.pixabay.com',
 		],
 	},
 };
