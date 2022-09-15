@@ -12,7 +12,7 @@ const Nav = () => {
 	return (
 		<nav className=' w-screen  h-[10vh] shadow-lg bg-black '>
 			<div className='flex items-center justify-between container mx-auto h-full text-gray-500'>
-				<h1 className>
+				<h1>
 					<Link href='/'>my shop</Link>
 				</h1>
 				<ul className='flex items-center justify-between gap-3'>
