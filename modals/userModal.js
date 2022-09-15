@@ -5,11 +5,11 @@ const userSchema = mongoose.Schema(
 		name: { type: String, required: true },
 		password: { type: String, required: true },
 		email: { type: String, unique: true, required: true },
-		isAdmin: { type: boolean, default: false },
+		isAdmin: { type: Boolean, default: false },
 	},
 	{ timeStamp: true }
 );
 
-const User = mongoose.model('User', userSchema);
+const User = mongoose.models.User || mongoose.model('User', userSchema);
 
 export default User;
