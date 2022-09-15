@@ -10,9 +10,9 @@ const Nav = () => {
 		'pb-4',
 	];
 	return (
-		<nav className=' w-screen bg-transparent h-[10vh] shadow-lg '>
+		<nav className=' w-screen  h-[10vh] shadow-lg bg-black '>
 			<div className='flex items-center justify-between container mx-auto h-full text-gray-500'>
-				<h1>
+				<h1 className>
 					<Link href='/'>my shop</Link>
 				</h1>
 				<ul className='flex items-center justify-between gap-3'>
