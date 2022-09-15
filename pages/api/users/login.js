@@ -26,7 +26,7 @@ handler.post(async (req, res) => {
 				isAdmin: user.isAdmin,
 			});
 		} else {
-			return res.send('wrong credentials');
+			return res.status(403).send('wrong credentials');
 		}
 	} catch (err) {
 		console.log(err);
