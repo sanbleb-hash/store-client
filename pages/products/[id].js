@@ -2,25 +2,17 @@ import axios from 'axios';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React, { useEffect, useState } from 'react';
-import Button from '../components/button';
+import { useEffect, useState } from 'react';
 
-const Product = () => {
+import Loader from '../components/loader';
+
+const Product = ({ product }) => {
 	const router = useRouter();
+	const [loading, setLoading] = useState(true);
 
-	const { id } = router.query;
-
-	const [product, setProduct] = useState(null);
 	useEffect(() => {
-		const fetchProduct = async () => {
-			const { data } = await axios.get(`/api/products/${id}`);
-
-			setProduct(data);
-		};
-		fetchProduct();
-	}, [id]);
-
-	console.log(product);
+		if (product) setLoading(false);
+	}, [product]);
 
 	const addToCartHandler = (id) => {
 		console.log(id);
@@ -28,6 +20,7 @@ const Product = () => {
 
 	return (
 		<div className=' min-h-screen container mx-auto bg-inherit'>
+			{loading && Loader}
 			<div className='py-2'>
 				<Link href='/shop'>back to products</Link>
 			</div>
@@ -72,12 +65,12 @@ const Product = () => {
 								)}
 							</div>
 						</div>
-						<Button
-							dynamicStyles=' w-full border border-black py-2'
-							functions={addToCartHandler(product?._id)}
+						<button
+							className=' w-full border border-black py-2 active:scale-105 transition-all delay-75'
+							onClick={addToCartHandler(product?._id)}
 						>
 							Add to cart
-						</Button>
+						</button>
 					</div>
 				</div>
 			</div>
@@ -85,11 +78,15 @@ const Product = () => {
 	);
 };
 
-// export async function getServerSideProps(context) {
-// 	const { params } = context;
-// 	const { id } = params;
-// 	const product = await axios.get(`/api/products/${id}`);
-// 	return { product };
-// }
+export async function getServerSideProps(context) {
+	const { params } = context;
+	const { id } = params;
+
+	const { data } = await axios.get('http://localhost:3000/api/products/' + id);
+
+	return {
+		props: { product: data },
+	};
+}
 
 export default Product;
