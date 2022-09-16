@@ -1,26 +1,33 @@
-import { timeStamp } from 'console';
 import mongoose from 'mongoose';
 
-const productSchema = mongoose.Schema(
+const productSchema = new mongoose.Schema(
 	{
 		name: { type: String, required: true },
-		description: String,
-		numReviews: { type: Number, default: 0 },
-		countInStock: { type: Number, default: 0 },
-		rating: { type: String },
+		slug: { type: String, required: true, unique: true },
+		category: { type: [String], required: true },
+		image: { type: String, required: true },
+		price: { type: Number, required: true },
+		brand: { type: String, required: true },
+		rating: { type: Number, required: true, default: 0 },
 		review: {
+			user: {
+				type: mongoose.Schema.Types.ObjectId,
+				ref: 'User',
+				required: true,
+			},
 			name: { type: String, required: true },
 			rating: { type: Number, default: 0 },
 			comment: { type: String, required: true },
 		},
-
-		brand: { type: String },
-		category: { type: [String] },
+		numReviews: { type: Number, required: true, default: 0 },
+		countInStock: { type: Number, required: true, default: 0 },
+		description: { type: String, required: true },
 	},
-	{ timeStamp: true }
+	{
+		timestamps: true,
+	}
 );
 
 const Product =
-	mongoose.models.Product || mongoose.model('Product ', productSchema);
-
+	mongoose.models.Product || mongoose.model('Product', productSchema);
 export default Product;

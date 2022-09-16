@@ -12,7 +12,7 @@ const Products = ({ product }) => {
 				onMouseLeave={() => setShowBtn(false)}
 			>
 				<Image
-					src={product.imageUrl}
+					src={product.image}
 					alt=' pic'
 					objectFit='cover'
 					layout='fill'
