@@ -67,7 +67,7 @@ const Product = ({ product }) => {
 						</div>
 						<button
 							className=' w-full border border-black py-2 active:scale-105 transition-all delay-75'
-							onClick={addToCartHandler(product?._id)}
+							onClick={addToCartHandler}
 						>
 							Add to cart
 						</button>
