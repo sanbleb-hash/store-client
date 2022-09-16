@@ -1,18 +1,27 @@
+import axios from 'axios';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Button from '../components/button';
-import { storeData } from '../utlis/data';
 
 const Product = () => {
 	const router = useRouter();
 
-	const { query } = useRouter();
-	const { id } = query;
+	const { id } = router.query;
 
-	const product = storeData.find((product) => id === product.id);
+	const [product, setProduct] = useState(null);
+	useEffect(() => {
+		const fetchProduct = async () => {
+			const { data } = await axios.get(`/api/products/${id}`);
+
+			setProduct(data);
+		};
+		fetchProduct();
+	}, [id]);
+
 	console.log(product);
+
 	const addToCartHandler = (id) => {
 		console.log(id);
 	};
@@ -25,7 +34,7 @@ const Product = () => {
 			<div className='grid md:grid-cols-4 md:gap-3'>
 				<div className='md:col-span-2'>
 					<Image
-						src={product?.imageUrl}
+						src={product?.image}
 						alt={product?.name}
 						width={640}
 						height={640}
@@ -37,12 +46,12 @@ const Product = () => {
 						<li>
 							<h1 className='text-lg'>{product?.name}</h1>
 						</li>
-						<li>Category: {product?.category}</li>
-						<li>Brand: {product?.name}</li>
+						<li>Category: {product?.category[0]}</li>
+						<li>Brand: {product?.brand}</li>
 						<li>
-							{product?.rating} of {product?.id} reviews
+							{product?.rating} of {product?.reviews} reviews
 						</li>
-						<li>Description: {product?.price}</li>
+						<li>Description: {product?.description}</li>
 					</ul>
 				</div>
 				<div>
@@ -53,11 +62,19 @@ const Product = () => {
 						</div>
 						<div className='mb-2 flex justify-between'>
 							<div>Status</div>
-							<div>{product?.price}</div>
+							<div>
+								{product?.countInStock > 0 ? (
+									<span className=' text-green-400'>
+										{product.countInStock} items available
+									</span>
+								) : (
+									<span className=' text-red-400'>out of stock</span>
+								)}
+							</div>
 						</div>
 						<Button
 							dynamicStyles=' w-full border border-black py-2'
-							functions={addToCartHandler(product?.id)}
+							functions={addToCartHandler(product?._id)}
 						>
 							Add to cart
 						</Button>
@@ -67,5 +84,12 @@ const Product = () => {
 		</div>
 	);
 };
+
+// export async function getServerSideProps(context) {
+// 	const { params } = context;
+// 	const { id } = params;
+// 	const product = await axios.get(`/api/products/${id}`);
+// 	return { product };
+// }
 
 export default Product;

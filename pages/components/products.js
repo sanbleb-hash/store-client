@@ -38,7 +38,7 @@ const Products = ({ product }) => {
 						<span className=' bg-yellow-500/60 text-white p-4 rounded-full  absolute top-8 right-3 z-50'>
 							<BsInfo
 								className=' text-3xl'
-								onClick={() => router.push(`/products/${product.id}`)}
+								onClick={() => router.push(`/products/${product._id}`)}
 							/>
 						</span>
 					</>
