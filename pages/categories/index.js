@@ -23,8 +23,8 @@ const Categories = () => {
 						></div>
 						<h3 className='inline-block text-white z-50'>{category.title}</h3>
 						<Button
-							stylez={() => router.push(`/categories/${category.title}`)}
-							size={
+							directions={() => router.push(`/categories/${category.title}`)}
+							dynamicStyles={
 								'bg-black px-6 py-3 text-gray-100 hover:bg-white hover:text-gray-500 border-black hover:border transition-all delay-100 ease-in-out z-50  '
 							}
 						>
