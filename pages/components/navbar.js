@@ -1,14 +1,7 @@
 import Link from 'next/link';
-import React from 'react';
+import React, { useContext } from 'react';
 
 const Nav = () => {
-	const isActive = [
-		'text-gray-500 ',
-		'border',
-		'border-bottom ',
-		'scale-110',
-		'pb-4',
-	];
 	return (
 		<nav className=' w-screen  h-[10vh] shadow-lg bg-black '>
 			<div className='flex items-center justify-between container mx-auto h-full text-gray-500'>

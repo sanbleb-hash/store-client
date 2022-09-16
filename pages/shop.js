@@ -1,5 +1,4 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
 import Products from './components/products';
 
@@ -16,7 +15,6 @@ const Shop = () => {
 		}
 		fetchProducts();
 	}, []);
-	console.log(products);
 
 	return (
 		<section className=' min-h-screen w-full '>

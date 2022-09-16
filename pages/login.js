@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import cookies from 'js-cookie';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -6,12 +6,9 @@ import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 import { BiLoaderAlt } from 'react-icons/bi';
 import { useRouter } from 'next/router';
-import { userContext } from '../utils/context/userContext';
+import { authContext } from '../utils/context/userContext';
 
 const SignUp = () => {
-	const item = function (it) {
-		cookies.set('user', JSON.stringify('user', it));
-	};
 	const navigate = useRouter();
 	const [formData, setFormData] = useState({
 		name: '',
@@ -24,8 +21,8 @@ const SignUp = () => {
 	};
 	const { name, email, password, password2 } = formData;
 
-	const { state, dispatch } = useContext(userContext);
-	const { isLoading, isSuccess } = state;
+	const { state, dispatch } = useContext(authContext);
+	const { userLoading } = state;
 
 	const [isLogin, setIsLoggedIn] = useState(false);
 
@@ -59,8 +56,9 @@ const SignUp = () => {
 						token: data.token,
 						isLoading: false,
 					});
-					item(data);
-					isSuccess && navigate.push('/');
+					cookies.set('user', data);
+					data;
+					navigate.push('/');
 				} else {
 					dispatch({ type: 'LOGIN_REQUEST' });
 					const { data } = await axios.post('/api/users/login', {
@@ -73,7 +71,8 @@ const SignUp = () => {
 						token: data.token,
 						isLoading: false,
 					});
-					item(data);
+					cookies.set('user', data);
+
 					setTimeout(function () {
 						navigate.push('/');
 					}, 2000);
@@ -83,6 +82,14 @@ const SignUp = () => {
 			dispatch({ type: 'LOGIN_FAILURE', payload: error.message });
 		}
 	};
+
+	const { user } = state;
+
+	useEffect(() => {
+		if (userInfo) {
+			setTimeout(() => navigate.push('/'), 2000);
+		}
+	}, [navigate]);
 	if (isLoading) {
 		return (
 			<div className=' w-screen h-screen flex items-center justify-center '>
@@ -90,7 +97,6 @@ const SignUp = () => {
 			</div>
 		);
 	}
-
 	return (
 		<section className=' container py-10 mx-auto min-h-[90vh] '>
 			<h1 className=' text-center '> {isLogin ? 'Sign in' : 'sign up'}</h1>
