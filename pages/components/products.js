@@ -12,25 +12,27 @@ const Products = ({ product }) => {
 	return (
 		<>
 			<div
-				className=' min-w-[300px] h-[450px] shadow-lg rounded-lg relative z-10 flex flex-col  '
+				className=' min-w-[280px] h-[320px] shadow-lg overflow-hidden relative z-10 flex flex-col rounded-xl  '
 				onMouseEnter={() => setShowBtn(!showBtn)}
 				onMouseLeave={() => setShowBtn(false)}
 			>
-				<Image
-					src={product.image}
-					alt=' pic'
-					objectFit='cover'
-					layout='fill'
-					className='z-0'
-				/>
-				<div className='  bg-black flex items-start justify-between px-2 text-sm text-gray-300 w-full z-30'>
+				<div className=' w-full h-[300px] relative'>
+					<Image
+						src={product.image}
+						alt=' pic'
+						objectFit='cover'
+						layout='fill'
+						className='z-0'
+					/>
+				</div>
+				<div className='  bg-black/60 rounded-b-xl flex items-start justify-between px-2 text-sm text-gray-300 w-full z-30'>
 					<h4 className='inline-block italic'>{product.name}</h4>
 					<p className='inline-block'>$ {product.price}</p>
 				</div>
 				{showBtn && (
 					<>
 						<Button
-							dynamicStyles=' absolute bottom-2 left-2 right-2 px-8 py-3 bg-gray-300 text-gray-800'
+							dynamicStyles=' absolute bottom-2 left-2 right-2 px-8 py-3 bg-gray-300 text-gray-800 z-50'
 							directions={() => router.push(`/cart`)}
 						>
 							add to cart
