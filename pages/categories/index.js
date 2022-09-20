@@ -1,6 +1,6 @@
 import React from 'react';
 import { useRouter } from 'next/router';
-import Button from '../components/button';
+import Button from '../../components/button';
 import { categories } from '../utlis/data';
 
 const Categories = () => {

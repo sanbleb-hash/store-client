@@ -1,31 +1,66 @@
 import { createContext, useReducer } from 'react';
-import cookies from 'js-cookie';
 
-export const userContext = createContext();
-const initialState = {
-	user: cookies.get('user') ? JSON.parse(cookies.get('user')) : null,
-	userLoading: true,
+export const AuthContext = createContext();
+
+const INITIAl_STATE = {
+	user: localStorage.getItem('user')
+		? JSON.parse(localStorage.getItem('user'))
+		: null,
+	isLoading: false,
+	isError: false,
 	error: null,
 };
 
 const reducer = (state, action) => {
-	if (action.type === 'LOGIN_REQUEST') {
-		return state.userLoading;
-	} else if (action.type === 'USER_LOGIN') {
-		return {
-			...state,
-			user: state.user,
-			userLoading: false,
-		};
-	} else if (action.type === 'USER_LOGOUT') {
-		return { initialState, userLoading: false };
-	} else {
-		return { initialState, userLoading: false };
+	switch (action.type) {
+		case 'REGISTER_USER':
+			return {
+				...state,
+				user: action.payload,
+				isLoading: false,
+				isError: false,
+				error: null,
+			};
+		case 'LOGIN_USER':
+			return {
+				...state,
+				user: action.payload,
+				isLoading: false,
+				isError: false,
+				error: null,
+			};
+		case 'LOGOUT_USER':
+			return {
+				...state,
+				user: localStorage.removeItem('user') || null,
+				isLoading: false,
+				isError: false,
+				error: null,
+			};
+		case 'SET_ERROR':
+			return {
+				...state,
+				isLoading: false,
+				isError: true,
+				error: action.payload,
+			};
+		case 'INITIAL_LOAD':
+			return {
+				...state,
+				isLoading: true,
+				isError: false,
+				error: null,
+			};
+		default:
+			return state;
 	}
 };
 
-export function UserProvider({ children }) {
-	const [state, dispatch] = useReducer(reducer, initialState);
-	const value = { state, dispatch };
-	return <userContext.Provider value={value}>{children}</userContext.Provider>;
-}
+export const AuthProvider = ({ children }) => {
+	const [state, dispatch] = useReducer(reducer, INITIAl_STATE);
+	return (
+		<AuthContext.Provider value={{ state, dispatch }}>
+			{children}
+		</AuthContext.Provider>
+	);
+};

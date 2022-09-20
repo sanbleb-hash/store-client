@@ -9,6 +9,9 @@ import { useRouter } from 'next/router';
 import { authContext } from '../utils/context/userContext';
 
 const SignUp = () => {
+	const { state } = useContext(authContext);
+	const [user, userLoading] = state;
+
 	const navigate = useRouter();
 	const [formData, setFormData] = useState({
 		name: '',
@@ -16,13 +19,11 @@ const SignUp = () => {
 		password: '',
 		password2: '',
 	});
+
 	const handleChange = (e) => {
 		setFormData({ ...formData, [e.target.id]: e.target.value });
 	};
 	const { name, email, password, password2 } = formData;
-
-	const { state, dispatch } = useContext(authContext);
-	const { userLoading } = state;
 
 	const [isLogin, setIsLoggedIn] = useState(false);
 
@@ -83,14 +84,12 @@ const SignUp = () => {
 		}
 	};
 
-	const { user } = state;
-
 	useEffect(() => {
-		if (userInfo) {
+		if (user) {
 			setTimeout(() => navigate.push('/'), 2000);
 		}
 	}, [navigate]);
-	if (isLoading) {
+	if (userLoading) {
 		return (
 			<div className=' w-screen h-screen flex items-center justify-center '>
 				<BiLoaderAlt className=' animate-spin text-5xl text-pink-300' />
